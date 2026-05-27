@@ -379,16 +379,28 @@ function doVerdict() {
 // Bulletproof init — event delegation on document so it works regardless of
 // DOMContentLoaded timing, script-defer quirks (iOS Safari BFCache), or any
 // later DOM mutation. Also catches taps anywhere on the trigger buttons.
+// Publish openQuiz/closeQuiz globally so the inline early-init in <head>
+// can call them once this script has loaded.
+window.openQuiz = openQuiz;
+window.closeQuiz = closeQuiz;
+
 function initQuizTriggers() {
   if (window.__quizInit) return;
   window.__quizInit = true;
+  // Delegated click — works no matter when the buttons appear in the DOM.
   document.addEventListener("click", function (e) {
-    var t = e.target && e.target.closest && e.target.closest("#quizStart, #quizStartHero");
+    var t = e.target && e.target.closest && e.target.closest("#quizStart, #quizStartHero, [data-quiz-start]");
     if (t) { e.preventDefault(); openQuiz(); }
   }, { passive: false });
   document.addEventListener("keydown", function (e) {
     if (e.key === "Escape") closeQuiz();
   });
+  // If the user clicked Start BEFORE this script loaded, the inline boot
+  // would have stashed __quizPending=true. Drain it now.
+  if (window.__quizPending) {
+    window.__quizPending = false;
+    openQuiz();
+  }
 }
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", initQuizTriggers);

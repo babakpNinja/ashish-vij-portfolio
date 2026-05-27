@@ -9,6 +9,27 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:wght@600;700&display=swap" rel="stylesheet" />
+  <script>
+    // Phantom early-init — guarantees the Start-quiz buttons are clickable
+    // even if quiz.v3.js is delayed by a slow network, blocked by an ad-blocker,
+    // or cached as a broken version. When the external script loads, it sees
+    // window.__quizPending and fires openQuiz immediately.
+    (function () {
+      window.__quizPending = false;
+      function handler(e) {
+        var t = e.target && e.target.closest && e.target.closest("#quizStart, #quizStartHero, [data-quiz-start]");
+        if (!t) return;
+        e.preventDefault();
+        if (typeof window.openQuiz === "function") {
+          window.openQuiz();
+        } else {
+          window.__quizPending = true;
+        }
+      }
+      document.addEventListener("click", handler, true);
+      document.addEventListener("touchend", handler, true);
+    })();
+  </script>
 </head>
 <body>
   <nav class="nav">
@@ -208,6 +229,6 @@
       <div id="quizStage" class="quiz-overlay__stage"></div>
     </div>
   </div>
-  <script src="quiz.js?v=2"></script>
+  <script src="quiz.v3.js"></script>
 </body>
 </html>
