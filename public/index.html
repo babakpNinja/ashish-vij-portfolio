@@ -17,6 +17,7 @@
       <a href="#about">About</a>
       <a href="#experience">Experience</a>
       <a href="#thesis">Thesis</a>
+      <a href="#quiz">Quiz</a>
       <a href="#contact">Contact</a>
     </div>
   </nav>
@@ -30,6 +31,7 @@
         <div class="cta-row">
           <a class="btn btn--primary" href="https://www.linkedin.com/in/ashishvij" target="_blank" rel="noopener">View LinkedIn</a>
           <a class="btn btn--ghost" href="#thesis">Read the thesis</a>
+          <button type="button" class="btn btn--accent" id="quizStartHero">🎮 Take the quiz →</button>
         </div>
       </div>
       <div class="hero__photo">
@@ -160,6 +162,24 @@
       </div>
     </section>
 
+    <section id="quiz" class="section section--quiz">
+      <div class="section__inner quiz-cta">
+        <p class="eyebrow eyebrow--light">Phantom-built · AI-powered · 10 questions</p>
+        <h2>How well do you <em>actually</em> know Ashish?</h2>
+        <p class="lead">Ten questions. Multiple choice. A Phantom-judged verdict at the end.
+          The receipts come from his own site, RocketReach, and the Marketing Analytics Summit speaker bio —
+          no curveballs, just attention to detail.</p>
+        <button type="button" class="btn btn--primary btn--lg" id="quizStart">
+          ▶ Start the quiz
+        </button>
+        <ul class="quiz-cta__meta">
+          <li><strong>~3 min</strong> · 10 questions</li>
+          <li><strong>AI reactions</strong> after every answer</li>
+          <li><strong>Personalised verdict</strong> at the end</li>
+        </ul>
+      </div>
+    </section>
+
     <section id="contact" class="section section--alt">
       <div class="section__inner contact">
         <h2>Get in touch</h2>
@@ -177,5 +197,17 @@
     <p>© 2026 Ashish Vij. Built for him by <a href="#" title="Phantom — Browser Automation Agent">Phantom 👻</a>.</p>
     <p class="footer__sources">Content sourced from public profiles: LinkedIn, Marketing Analytics Summit, RocketReach, and Ashish's own LinkedIn essays.</p>
   </footer>
+
+  <!-- Quiz overlay -->
+  <div id="quizOverlay" class="quiz-overlay" aria-hidden="true" role="dialog" aria-label="How well do you know Ashish quiz">
+    <div class="quiz-overlay__shell">
+      <div class="quiz-overlay__header">
+        <span class="quiz-overlay__brand">👻 Phantom AI Quiz</span>
+        <span class="quiz-overlay__subtitle">How well do you know Ashish?</span>
+      </div>
+      <div id="quizStage" class="quiz-overlay__stage"></div>
+    </div>
+  </div>
+  <script src="quiz.js" defer></script>
 </body>
 </html>
