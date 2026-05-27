@@ -376,10 +376,22 @@ function doVerdict() {
   });
 }
 
-window.addEventListener("DOMContentLoaded", () => {
-  $("#quizStart")?.addEventListener("click", openQuiz);
-  $("#quizStartHero")?.addEventListener("click", openQuiz);
-  document.addEventListener("keydown", e => {
+// Bulletproof init — event delegation on document so it works regardless of
+// DOMContentLoaded timing, script-defer quirks (iOS Safari BFCache), or any
+// later DOM mutation. Also catches taps anywhere on the trigger buttons.
+function initQuizTriggers() {
+  if (window.__quizInit) return;
+  window.__quizInit = true;
+  document.addEventListener("click", function (e) {
+    var t = e.target && e.target.closest && e.target.closest("#quizStart, #quizStartHero");
+    if (t) { e.preventDefault(); openQuiz(); }
+  }, { passive: false });
+  document.addEventListener("keydown", function (e) {
     if (e.key === "Escape") closeQuiz();
   });
-});
+}
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initQuizTriggers);
+} else {
+  initQuizTriggers();
+}
